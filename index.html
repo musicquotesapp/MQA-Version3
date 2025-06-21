@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Music Quotes App</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Helvetica Neue', sans-serif;
+      background: #111;
+      color: #fff;
+      scroll-behavior: smooth;
+    }
+
+    section {
+      padding: 80px 20px;
+      text-align: center;
+    }
+
+    h1, h2 {
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: url('https://via.placeholder.com/1600x900?text=Music+Quotes+Logo') no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      position: relative;
+      color: white;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .hero h1 {
+      position: relative;
+      font-size: 2.6rem;
+      max-width: 800px;
+      z-index: 1;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .how-it-works ul {
+      list-style: none;
+      padding: 0;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .how-it-works li {
+      margin: 15px 0;
+      font-size: 1.2em;
+      opacity: 0;
+      transform: translateX(-30px);
+      animation: slideIn 1s forwards;
+    }
+
+    .how-it-works li:nth-child(2) { animation-delay: 0.5s; }
+    .how-it-works li:nth-child(3) { animation-delay: 1s; }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .quotes, #daily-quote {
+      font-style: italic;
+      font-size: 1.5em;
+      min-height: 80px;
+      margin: 20px auto;
+      max-width: 600px;
+    }
+
+    .email-form input[type="email"] {
+      padding: 10px;
+      width: 250px;
+      border-radius: 5px;
+      border: none;
+      font-size: 1em;
+    }
+
+    .email-form button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      font-size: 1em;
+      background: #fdd835;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .email-form {
+      margin-top: 20px;
+    }
+
+    .button-style {
+      padding: 12px 24px;
+      background: #fdd835;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 1em;
+      color: #000;
+      margin-top: 20px;
+    }
+
+    .button-style:hover {
+      background: #ffe566;
+    }
+
+    @media screen and (max-width: 768px) {
+      .hero h1 {
+        font-size: 2rem;
+        padding: 0 15px;
+      }
+
+      .email-form input[type="email"] {
+        width: 70%;
+        margin-bottom: 10px;
+      }
+
+      .email-form button {
+        width: 80%;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>We Deliver the Hustle, Heart, and Healing of Music—<br>One Lyric at a Time.</h1>
+  </section>
+
+  <!-- Problem & Solution -->
+  <section class="fade-in" id="problem">
+    <h2>Ever felt stuck, down, or drained?</h2>
+    <p>We built this app to give you the exact lyric that lifts you.</p>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works fade-in" id="how">
+    <h2>How It Works</h2>
+    <ul>
+      <li>* Choose your vibe (Motivation, Inspiration, etc.)</li>
+      <li>* Choose your genre (HipHop, Trap, Jazz…)</li>
+      <li>* Receive quotes daily.</li>
+    </ul>
+  </section>
+
+  <!-- Lyric of the Day -->
+  <section class="fade-in" id="daily">
+    <h2>Lyric of the Day</h2>
+    <button class="button-style" onclick="showRandomQuote()">Get My Lyric</button>
+    <div id="daily-quote">Click the button to see your lyric.</div>
+  </section>
+
+  <!-- Rotating Quotes -->
+  <section class="fade-in" id="quotes">
+    <h2>Example Quotes</h2>
+    <div class="quotes" id="quote-box">“Turn your wounds into wisdom.” – Jay-Z</div>
+  </section>
+
+  <!-- Email Waitlist -->
+  <section class="fade-in" id="email">
+    <h2>Join the Waitlist</h2>
+    <form class="email-form">
+      <input type="email" placeholder="Enter your email" required>
+      <button type="submit">Notify Me</button>
+    </form>
+  </section>
+
+  <script>
+    // Intersection fade-in logic
+    const faders = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.3 });
+
+    faders.forEach(fader => observer.observe(fader));
+
+    // Quotes array
+    const quotes = [
+      "“Turn your wounds into wisdom.” – Jay-Z",
+      "“You gotta keep your head up.” – 2Pac",
+      "“The marathon continues.” – Nipsey Hussle",
+      "“Sky is the limit.” – Biggie Smalls",
+      "“Dreams don't have deadlines.” – LL Cool J",
+      "“I’m not a businessman, I’m a business, man.” – Jay-Z",
+      "“Believe in yourself when no one else does.” – Eminem",
+      "“Everyday I'm hustlin'.” – Rick Ross",
+      "“Started from the bottom now we here.” – Drake",
+      "“Life without dreaming is a life without meaning.” – Wale"
+    ];
+
+    let quoteIndex = 0;
+    const quoteBox = document.getElementById('quote-box');
+
+    // Rotate quotes every 3 seconds
+    setInterval(() => {
+      quoteIndex = (quoteIndex + 1) % quotes.length;
+      quoteBox.innerText = quotes[quoteIndex];
+    }, 3000);
+
+    // Show random quote on button click
+    function showRandomQuote() {
+      const random = Math.floor(Math.random() * quotes.length);
+      document.getElementById('daily-quote').innerText = quotes[random];
+    }
+  </script>
+
+</body>
+</html>
